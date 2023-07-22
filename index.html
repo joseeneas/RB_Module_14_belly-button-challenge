@@ -11,24 +11,33 @@
 
 <body>
 
-  <div class="container">
+  <div class="container" style="background-color:lightskyblue">
     <div class="row">
-      <div class="col-md-12 jumbotron text-center">
-        <h1>Belly Button Biodiversity Dashboard</h1>
-        <p>Use the interactive charts below to explore the dataset</p>
+      <div class="col-md-12 text-center" style="background-color:lightskyblue">
+        <h1 background-color: #ABBAEA>Belly Button Biodiversity Dashboard</h1>
+        <h3>Use the interactive charts below to explore the dataset</h3>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-2">
+    <div class="row" style="background-color:lightskyblue">
+      <div class="col-md-2" style="background-color:lightskyblue">
         <div class="well">
           <h5>Test Subject ID No.:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
+          <select id="selDataset">
+          </select>
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Demographic Info</h3>
           </div>
-          <div id="sample-metadata" class="panel-body"></div>
+          <div id="sample-metadata" class="panel-body">
+            <p id="sample-metadata-1">ID:</p>
+            <p id="sample-metadata-2">ethnicity:</p>
+            <p id="sample-metadata-3">gender:</p>
+            <p id="sample-metadata-4">age:</p>
+            <p id="sample-metadata-5">location:</p>
+            <p id="sample-metadata-6">bbtype:</p>
+            <p id="sample-metadata-7">wfreq:</p>
+          </div>
         </div>
       </div>
       <div class="col-md-5">
