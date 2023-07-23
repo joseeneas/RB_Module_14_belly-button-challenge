@@ -43,9 +43,7 @@ function PickID(md){ // begin of function
   d3.select("#sample-metadata-2").text(`ethnicity: ${md.ethnicity}`);
   d3.select("#sample-metadata-3").text(`gender: ${md.gender}`);
   d3.select("#sample-metadata-4").text(`age: ${md.age}`);
-  if(md.location == null){
-    md.location = "unknown";
-  }
+  if(md.location == null){ md.location = "unknown"; }
   d3.select("#sample-metadata-5").text(`location: ${md.location}`);
   if(md.bbtype == null) { md.bbtype = 0};
   d3.select("#sample-metadata-6").text(`bbtype: ${md.bbtype}`);
@@ -140,8 +138,9 @@ function PickID(md){ // begin of function
 }; // end of function
 
 d3.selectAll("#selDataset").on("change", PickID);
-d3.selectAll("#selDataset").on("click", PickID);
 
+// let's ensure the first one is shown with just a click and no arrow movement
+d3.selectAll("#selDataset").on("click", PickID);
 d3.select("#selDataset").dispatch("click");
 
 
