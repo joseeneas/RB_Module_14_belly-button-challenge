@@ -10,6 +10,9 @@ The dataset reveals that a small handful of microbial species (also called
 operational taxonomic units, or OTUs, in the study) were present in more than
 70% of people, while the rest were relatively rare.
 
+To test the application, please go to: https://joseeneas.github.io/belly-button-challenge/
+
+
 ## Preparation steps
 
 - Create a new repository for this project called belly-button-challenge . 
