@@ -43,6 +43,9 @@ function PickID(md){ // begin of function
   d3.select("#sample-metadata-2").text(`ethnicity: ${md.ethnicity}`);
   d3.select("#sample-metadata-3").text(`gender: ${md.gender}`);
   d3.select("#sample-metadata-4").text(`age: ${md.age}`);
+  if(md.location == null){
+    md.location = "unknown";
+  }
   d3.select("#sample-metadata-5").text(`location: ${md.location}`);
   if(md.bbtype == null) { md.bbtype = 0};
   d3.select("#sample-metadata-6").text(`bbtype: ${md.bbtype}`);
@@ -51,7 +54,11 @@ function PickID(md){ // begin of function
   
   // prepare the elements to be used to plot the graphs
   let l = sp.otu_ids.length
-  for (let j=0; j < l; j++){ sp.otu_ids[j] = "OTU " + String(sp.otu_ids[j]);}
+  for (let j=0; j < l; j++) { 
+    if (String(sp.otu_ids[j]).slice(0,3) != "OTU") {
+      sp.otu_ids[j] = "OTU " + String(sp.otu_ids[j]);
+    }
+  }
 
   // lets isolate the 10 top OTUs
   let values = sp.sample_values.slice(0, 10);
@@ -65,7 +72,11 @@ function PickID(md){ // begin of function
     text: labels,
     name: "Belly Button Biodiversity",
     type: "bar",
-    orientation: "h"
+    orientation: "h",
+    transforms: [{
+      type: 'sort',
+      target: 'y',
+      order: 'descending'}]
   };
 
   // lets setup Graph2
