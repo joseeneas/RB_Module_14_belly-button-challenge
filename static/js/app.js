@@ -11,6 +11,13 @@ var id         =  0;
 var md         = [];
 var sp         = [];
 
+// Color gradient used in the graphs
+const colorGradient = ['rgb(250, 250, 110)', 'rgb(196, 236, 116)', 'rgb(146, 220, 126)', 
+                       'rgb(100, 201, 135)', 'rgb(057, 180, 142)', 'rgb(008, 159, 143)',
+                       'rgb(000, 137, 138)', 'rgb(008, 115, 127)', 'rgb(033, 093, 110)', 
+                       'rgb(042, 072, 088)'];
+
+
 // aquire json data from the URL and prepare it to be used in the different graphs.
 d3.json(url).then(function(data) { // begin of function
   
@@ -38,17 +45,19 @@ function PickID(md){ // begin of function
   md = a_metadata.filter(selectID)[0];
   sp = a_samples.filter(selectID)[0];
 
+  // last data cleaning action
+  if(md.location == null) { md.location = "unknown"; }
+  if(md.bbtype   == null) { md.bbtype   = 0};
+  if(md.wfreq    == null) { md.wfreq    = 0};
+
   // populate the metadata table
-  d3.select("#sample-metadata-1").text(`ID: ${md.id}`);
-  d3.select("#sample-metadata-2").text(`ethnicity: ${md.ethnicity}`);
-  d3.select("#sample-metadata-3").text(`gender: ${md.gender}`);
-  d3.select("#sample-metadata-4").text(`age: ${md.age}`);
-  if(md.location == null){ md.location = "unknown"; }
-  d3.select("#sample-metadata-5").text(`location: ${md.location}`);
-  if(md.bbtype == null) { md.bbtype = 0};
-  d3.select("#sample-metadata-6").text(`bbtype: ${md.bbtype}`);
-  if(md.wfreq == null) { md.wfreq = 0};
-  d3.select("#sample-metadata-7").text(`wfreq: ${md.wfreq}`);
+  d3.select("#sample-metadata-1").text(`ID        : ${md.id}`);
+  d3.select("#sample-metadata-2").text(`ethnicity : ${md.ethnicity}`);
+  d3.select("#sample-metadata-3").text(`gender    : ${md.gender}`);
+  d3.select("#sample-metadata-4").text(`age       : ${md.age}`);
+  d3.select("#sample-metadata-5").text(`location  : ${md.location}`);
+  d3.select("#sample-metadata-6").text(`bbtype    : ${md.bbtype}`);
+  d3.select("#sample-metadata-7").text(`wfreq     : ${md.wfreq}`);
   
   // prepare the elements to be used to plot the graphs
   let l = sp.otu_ids.length
@@ -64,77 +73,57 @@ function PickID(md){ // begin of function
   let labels = sp.otu_labels.slice(0,10);
   
   // lets setup Graph1
-  let trace1 = {
-    x: values,
-    y: ids,
-    text: labels,
-    name: "Belly Button Biodiversity",
-    type: "bar",
-    orientation: "h",
-    transforms: [{
-      type: 'sort',
-      target: 'y',
-      order: 'descending'}],
-    marker : {
-        color: ['rgb(250, 250, 110)', 'rgb(196, 236, 116)', 'rgb(146, 220, 126)', 'rgb(100, 201, 135)', 'rgb(057, 180, 142)' ,
-                'rgb(008, 159, 143)', 'rgb(000, 137, 138)', 'rgb(008, 115, 127)', 'rgb(033, 093, 110)', 'rgb(042, 072, 088)']}
-  };
+  let barGraph = [{
+    x           : values,
+    y           : ids,
+    text        : labels,
+    name        : "Bar-Belly Button Biodiversity",
+    type        : "bar",
+    orientation : "h",
+    transforms  : [{ type : 'sort', target : 'y', order : 'descending'}],
+    marker      : { color : colorGradient}}];
 
   // lets setup Graph2
-  let trace2 = {
-    x: ids,
-    y: values,
-    mode: 'markers',
-    text: labels,
-    name : "Belly Button Biodiversity",
-    marker : {
-      color: ['rgb(250, 250, 110)', 'rgb(196, 236, 116)', 'rgb(146, 220, 126)', 'rgb(100, 201, 135)', 'rgb(057, 180, 142)',
-              'rgb(008, 159, 143)', 'rgb(000, 137, 138)', 'rgb(008, 115, 127)', 'rgb(033, 093, 110)', 'rgb(042, 072, 088)'],
-      size: values
-    },
-    type: "bubble"
-  };
+  let bubbleGraph = [{
+    x           : ids,
+    y           : values,
+    mode        : 'markers',
+    text        : labels,
+    name        : "Bubble-Belly Button Biodiversity",
+    type        : "bubble",
+    marker      : { color : colorGradient, size : values }}];
 
   // lets setup Graph3
-  let trace3 = [
-    {
-      domain: { x: [0, 1], y: [0, 1] },
-      value: md.wfreq,
-      type: "indicator",
-      mode: "gauge+number",
-      delta: { reference: 10 },
-      gauge: {
-        axis: { range: [0, 10] },
-        bar: {'color': "darkblue"},
-        steps: [
-          { range: [0, 1], color: 'rgb(250, 250, 110)' },
-          { range: [1, 2], color: 'rgb(196, 236, 116)' },
-          { range: [2, 3], color: 'rgb(146, 220, 126)' },
-          { range: [3, 4], color: 'rgb(100, 201, 135)' },
-          { range: [4, 5], color: 'rgb(57, 180, 142)'  },
-          { range: [5, 6], color: 'rgb(8, 159, 143)'   },
-          { range: [6, 7], color: 'rgb(0, 137, 138)'   },
-          { range: [7, 8], color: 'rgb(8, 115, 127)'   },
-          { range: [8, 9], color: 'rgb(33, 93, 110)'   },
-          { range: [9,10], color: 'rgb(42, 72, 88)'    } 
-        ]
-      }
-    }
-  ];
+  let gaugeGraph = [{
+      domain    : { x: [0, 1], y: [0, 1] },
+      value     : md.wfreq,
+      type      : "indicator",
+      mode      : "gauge+number",
+      delta     : { reference: 10 },
+      gauge     : {
+        axis    : { range: [0, 10] },
+        bar     : {'color': "darkblue"},
+        steps   : [
+          { range : [0, 1], color: 'rgb(250, 250, 110)' },
+          { range : [1, 2], color: 'rgb(196, 236, 116)' },
+          { range : [2, 3], color: 'rgb(146, 220, 126)' },
+          { range : [3, 4], color: 'rgb(100, 201, 135)' },
+          { range : [4, 5], color: 'rgb(057, 180, 142)' },
+          { range : [5, 6], color: 'rgb(008, 159, 143)' },
+          { range : [6, 7], color: 'rgb(000, 137, 138)' },
+          { range : [7, 8], color: 'rgb(008, 115, 127)' },
+          { range : [8, 9], color: 'rgb(033, 093, 110)' },
+          { range : [9,10], color: 'rgb(042, 072, 088)' }]}}];
 
   // adjust contents and layout for the 3 Graphs
-  let traceData1 = [trace1];
-  let traceData2 = [trace2];
-  let traceData3 = trace3;
-
   let layout1 = { title: "Top 10 OTUs"              , plot_bgcolor:"Lightskyblue"};
-  let layout2 = { title: "Top 10 OTUs" ,              plot_bgcolor:"Lightskyblue"};
+  let layout2 = { title: "Top 10 OTUs"              , plot_bgcolor:"Lightskyblue"};
   let layout3 = { title: "Weekly washing frequency" , plot_bgcolor:"Lightskyblue"}; 
 
   // Plot the Graphs
-  Plotly.newPlot("bar",    traceData1, layout1);
-  Plotly.newPlot("bubble", traceData2, layout2);
-  Plotly.newPlot('gauge',  traceData3, layout3);
+  Plotly.newPlot("bar"   ,    barGraph, layout1);
+  Plotly.newPlot("bubble", bubbleGraph, layout2);
+  Plotly.newPlot('gauge' ,  gaugeGraph, layout3);
 
 }; // end of function
 
@@ -142,5 +131,3 @@ d3.selectAll("#selDataset").on("change", PickID);
 
 // let's ensure the first one is shown with a click
 d3.selectAll("#selDataset").on("click", PickID);
-
-
