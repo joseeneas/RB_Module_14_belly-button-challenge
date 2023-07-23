@@ -74,7 +74,12 @@ function PickID(md){ // begin of function
     transforms: [{
       type: 'sort',
       target: 'y',
-      order: 'descending'}]
+      order: 'descending'}],
+    marker : {
+        color: ['rgb(250, 250, 110)','rgb(196, 236, 116)',
+                'rgb(146, 220, 126)','rgb(100, 201, 135)',
+                'rgb(57, 180, 142)','rgb(8, 159, 143)',
+                'rgb(0, 137, 138)','rgb(8, 115, 127)','rgb(33, 93, 110)','rgb(42, 72, 88)']}
   };
 
   // lets setup Graph2
@@ -126,8 +131,8 @@ function PickID(md){ // begin of function
   let traceData2 = [trace2];
   let traceData3 = trace3;
 
-  let layout1 = { title: "10 Top OTUs"              , plot_bgcolor:"Lightskyblue"};
-  let layout2 = { title: "10 Top OTUs" ,              plot_bgcolor:"Lightskyblue"};
+  let layout1 = { title: "Top 10 OTUs"              , plot_bgcolor:"Lightskyblue"};
+  let layout2 = { title: "Top 10 OTUs" ,              plot_bgcolor:"Lightskyblue"};
   let layout3 = { title: "Weekly washing frequency" , plot_bgcolor:"Lightskyblue"}; 
 
   // Plot the Graphs
