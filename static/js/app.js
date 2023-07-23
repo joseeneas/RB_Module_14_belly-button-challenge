@@ -76,10 +76,8 @@ function PickID(md){ // begin of function
       target: 'y',
       order: 'descending'}],
     marker : {
-        color: ['rgb(250, 250, 110)','rgb(196, 236, 116)',
-                'rgb(146, 220, 126)','rgb(100, 201, 135)',
-                'rgb(57, 180, 142)','rgb(8, 159, 143)',
-                'rgb(0, 137, 138)','rgb(8, 115, 127)','rgb(33, 93, 110)','rgb(42, 72, 88)']}
+        color: ['rgb(250, 250, 110)', 'rgb(196, 236, 116)', 'rgb(146, 220, 126)', 'rgb(100, 201, 135)', 'rgb(057, 180, 142)' ,
+                'rgb(008, 159, 143)', 'rgb(000, 137, 138)', 'rgb(008, 115, 127)', 'rgb(033, 093, 110)', 'rgb(042, 072, 088)']}
   };
 
   // lets setup Graph2
@@ -90,10 +88,8 @@ function PickID(md){ // begin of function
     text: labels,
     name : "Belly Button Biodiversity",
     marker : {
-      color: ['rgb(250, 250, 110)','rgb(196, 236, 116)',
-              'rgb(146, 220, 126)','rgb(100, 201, 135)',
-              'rgb(57, 180, 142)','rgb(8, 159, 143)',
-              'rgb(0, 137, 138)','rgb(8, 115, 127)','rgb(33, 93, 110)','rgb(42, 72, 88)'],
+      color: ['rgb(250, 250, 110)', 'rgb(196, 236, 116)', 'rgb(146, 220, 126)', 'rgb(100, 201, 135)', 'rgb(057, 180, 142)',
+              'rgb(008, 159, 143)', 'rgb(000, 137, 138)', 'rgb(008, 115, 127)', 'rgb(033, 093, 110)', 'rgb(042, 072, 088)'],
       size: values
     },
     type: "bubble"
@@ -144,8 +140,7 @@ function PickID(md){ // begin of function
 
 d3.selectAll("#selDataset").on("change", PickID);
 
-// let's ensure the first one is shown with just a click and no arrow movement
+// let's ensure the first one is shown with a click
 d3.selectAll("#selDataset").on("click", PickID);
-d3.select("#selDataset").dispatch("click");
 
 
